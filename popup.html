@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LinkMark</title>
+    <link rel="stylesheet" href="popup.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📌 LinkMark</h1>
+            <p class="subtitle">Save this page to your bookmarks</p>
+        </div>
+
+        <!-- Login Section -->
+        <div id="loginSection" class="section">
+            <div class="login-info">
+                <p>Connect with Gmail to save your bookmarks</p>
+            </div>
+            <button id="loginBtn" class="btn btn-primary">
+                <span class="google-icon">🔐</span>
+                Login with Gmail
+            </button>
+        </div>
+
+        <!-- Bookmark Section -->
+        <div id="bookmarkSection" class="section hidden">
+            <div class="user-info">
+                <div class="user-avatar">
+                    <img id="userAvatar" src="" alt="User Avatar">
+                </div>
+                <div class="user-details">
+                    <span id="userName"></span>
+                    <span id="userEmail"></span>
+                </div>
+                <button id="logoutBtn" class="btn-logout">Logout</button>
+            </div>
+
+            <div class="bookmark-form">
+                <div class="url-info">
+                    <div class="favicon-container">
+                        <img id="siteFavicon" src="" alt="Site favicon">
+                    </div>
+                    <div class="url-details">
+                        <h3 id="pageTitle"></h3>
+                        <p id="pageUrl"></p>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="category">Category</label>
+                    <div class="category-input-container">
+                        <input type="text" id="category" placeholder="e.g., Work, Learning, Shopping..."
+                            list="categoryList">
+                        <datalist id="categoryList">
+                            <option value="Work">
+                            <option value="Learning">
+                            <option value="Shopping">
+                            <option value="Entertainment">
+                            <option value="News">
+                            <option value="Research">
+                            <option value="Tools">
+                            <option value="Social">
+                        </datalist>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="notes">Notes (optional)</label>
+                    <textarea id="notes" placeholder="Add any notes about this bookmark..."></textarea>
+                </div>
+
+                <div class="form-actions">
+                    <button id="saveBtn" class="btn btn-primary">
+                        <span class="save-icon">💾</span>
+                        Save Bookmark
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Loading Section -->
+        <div id="loadingSection" class="section hidden">
+            <div class="loading">
+                <div class="spinner"></div>
+                <p>Saving your bookmark...</p>
+            </div>
+        </div>
+
+        <!-- Success Section -->
+        <div id="successSection" class="section hidden">
+            <div class="success">
+                <div class="success-icon">✅</div>
+                <h3>Bookmark Saved!</h3>
+                <p>Your bookmark has been successfully saved.</p>
+                <button id="saveAnotherBtn" class="btn btn-secondary">Save Another</button>
+            </div>
+        </div>
+
+        <!-- Error Section -->
+        <div id="errorSection" class="section hidden">
+            <div class="error">
+                <div class="error-icon">❌</div>
+                <h3>Error</h3>
+                <p id="errorMessage">Something went wrong. Please try again.</p>
+                <button id="retryBtn" class="btn btn-primary">Retry</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="popup.js"></script>
+</body>
+
+</html>

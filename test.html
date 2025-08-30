@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LinkMark Extension Test Page</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .test-section {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .test-button {
+            background: #4CAF50;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            margin: 10px 5px;
+        }
+
+        .test-button:hover {
+            background: #45a049;
+        }
+
+        code {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Monaco', 'Consolas', monospace;
+        }
+
+        .warning {
+            background: rgba(255, 193, 7, 0.2);
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .success {
+            background: rgba(76, 175, 80, 0.2);
+            border-left: 4px solid #4caf50;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>📌 LinkMark Extension Test Page</h1>
+
+        <div class="warning">
+            <h3>⚠️ Test Instructions</h3>
+            <p>This page is designed to test the LinkMark Chrome Extension. Make sure you have:</p>
+            <ul>
+                <li>Loaded the extension in Developer mode</li>
+                <li>Configured Google OAuth credentials</li>
+                <li>Set up your backend API (or enabled mock mode)</li>
+            </ul>
+        </div>
+
+        <div class="test-section">
+            <h3>🔐 Authentication Test</h3>
+            <p>Click the LinkMark extension icon and test the Gmail OAuth login process.</p>
+            <button class="test-button" onclick="testAuth()">Test Authentication</button>
+        </div>
+
+        <div class="test-section">
+            <h3>📚 Bookmark Test</h3>
+            <p>Current page details that should be captured:</p>
+            <ul>
+                <li><strong>Title:</strong> <span id="pageTitle"></span></li>
+                <li><strong>URL:</strong> <span id="pageUrl"></span></li>
+                <li><strong>Favicon:</strong> <img id="pageFavicon" src="" alt="Favicon"
+                        style="width: 16px; height: 16px; vertical-align: middle;"></li>
+            </ul>
+            <button class="test-button" onclick="testBookmark()">Test Bookmark Save</button>
+        </div>
+
+        <div class="test-section">
+            <h3>📂 Category Test</h3>
+            <p>Test these category scenarios:</p>
+            <ul>
+                <li>New category: <code>Testing</code></li>
+                <li>Existing categories: <code>Work</code>, <code>Learning</code></li>
+                <li>Special characters: <code>Work/Projects</code></li>
+                <li>Long category: <code>Very Long Category Name for Testing</code></li>
+            </ul>
+            <button class="test-button" onclick="testCategories()">Test Categories</button>
+        </div>
+
+        <div class="test-section">
+            <h3>🔧 Error Handling Test</h3>
+            <p>Test these error scenarios:</p>
+            <ul>
+                <li>Save bookmark without category</li>
+                <li>Network failure simulation</li>
+                <li>Invalid authentication token</li>
+            </ul>
+            <button class="test-button" onclick="testErrors()">Test Error Handling</button>
+        </div>
+
+        <div class="test-section">
+            <h3>🎨 UI Test</h3>
+            <p>Verify the extension UI works correctly:</p>
+            <ul>
+                <li>Popup opens and displays correctly</li>
+                <li>User avatar and info display</li>
+                <li>Form inputs work properly</li>
+                <li>Loading and success states</li>
+            </ul>
+            <button class="test-button" onclick="testUI()">Test UI</button>
+        </div>
+
+        <div class="success">
+            <h3>✅ Testing Checklist</h3>
+            <p>Complete this checklist to ensure everything works:</p>
+            <ul>
+                <li>☐ Extension loads without console errors</li>
+                <li>☐ OAuth login completes successfully</li>
+                <li>☐ User information displays correctly</li>
+                <li>☐ Current page info is captured</li>
+                <li>☐ Category input works and suggests previous categories</li>
+                <li>☐ Bookmark saves successfully</li>
+                <li>☐ Success message appears</li>
+                <li>☐ Logout works properly</li>
+                <li>☐ Error states display correctly</li>
+                <li>☐ Extension works on different websites</li>
+            </ul>
+        </div>
+
+        <div class="test-section">
+            <h3>🔍 Browser Console</h3>
+            <p>Open Developer Tools (F12) and check the Console tab for any errors while testing.</p>
+            <button class="test-button" onclick="openDevTools()">Open Dev Tools</button>
+        </div>
+    </div>
+
+    <script>
+        // Populate page info
+        document.getElementById('pageTitle').textContent = document.title;
+        document.getElementById('pageUrl').textContent = window.location.href;
+
+        // Try to get favicon
+        const favicon = document.querySelector('link[rel="icon"]') ||
+            document.querySelector('link[rel="shortcut icon"]') ||
+            document.querySelector('link[rel="apple-touch-icon"]');
+
+        if (favicon) {
+            document.getElementById('pageFavicon').src = favicon.href;
+        } else {
+            document.getElementById('pageFavicon').src = '/favicon.ico';
+        }
+
+        function testAuth() {
+            console.log('Testing authentication...');
+            alert('Click the LinkMark extension icon to test authentication');
+        }
+
+        function testBookmark() {
+            console.log('Testing bookmark save...');
+            alert('Click the LinkMark extension icon and try saving this page as a bookmark');
+        }
+
+        function testCategories() {
+            console.log('Testing categories...');
+            alert('Test different category names when saving bookmarks');
+        }
+
+        function testErrors() {
+            console.log('Testing error handling...');
+            alert('Try saving a bookmark without entering a category to test error handling');
+        }
+
+        function testUI() {
+            console.log('Testing UI...');
+            alert('Check that the extension popup displays correctly and all buttons work');
+        }
+
+        function openDevTools() {
+            console.log('=== LinkMark Extension Test ===');
+            console.log('Page Title:', document.title);
+            console.log('Page URL:', window.location.href);
+            console.log('Check for any extension errors above this message');
+            alert('Check the Console tab in Developer Tools for any errors');
+        }
+
+        // Log page load for testing
+        console.log('LinkMark test page loaded successfully');
+        console.log('Ready for extension testing');
+    </script>
+</body>
+
+</html>
